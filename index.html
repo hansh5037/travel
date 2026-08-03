@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>2026 오사카 여행</title>
+</head>
+<body>
+	<style>
+		body {max-width: 534px;width: 90%;margin: 60px auto;background-color: #f8f8f8;font-size: 14px;}
+		ul {list-style: none;padding: 0;margin: 0;}
+		button, a {all: unset}
+		:root {
+			--shadow: 1px 1px 4px 1px #dfdfdf;
+			--radius: 12px;
+		}
+
+		/* 제목 */
+		.headline {
+			font-size: 24px;
+			text-align: center;
+		}
+
+		/* info */
+		.info {
+			display: flex;
+			justify-content: space-evenly;
+			border-radius: var(--radius);
+			padding: 10px;
+			box-shadow: var(--shadow);
+			text-align: center;
+		}
+		.info-box {
+			flex: 1;
+		}
+		.info-icon {
+			font-size: 18px;
+		}
+		.info-text {
+			font-size: 10px;
+		}
+		.info-desc {
+			font-size: 8px;
+			color: #8d8d8d;
+		}
+
+		/* 탭버튼 */
+		.tab {
+			overflow: hidden;
+			display: flex;
+			justify-content: space-between;
+			background: #ffff;
+			padding: 10px;
+			margin-top: 70px;
+			border-radius: var(--radius);
+			box-shadow: var(--shadow);
+		}
+		.tab-list {
+			display: flex;
+			justify-content: center;
+		}
+		.tab-button {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			padding: 6px 16px;
+			line-height: 1;
+		}
+		.tab-icon {
+			font-weight: bold;
+			font-size: 20px;
+			color: #919191;
+		}
+		.tab-text {
+			overflow: hidden;
+			display: block;
+			margin: 4px;
+			transition: width .6s, opacity 1s;
+			font-size: 10px;
+		}
+		.is-active.tab-list {
+			border-radius: var(--radius);
+    		background-color: #f2a59b;
+			color: #fff;
+		}
+		.is-active .tab-icon {
+			color: #fff;
+		}
+
+		/* 탭판낼 */
+		.tabpanel-wrap {
+			display: grid;
+			grid-template-columns: 1fr;
+			grid-template-rows: 1fr;
+			overflow: hidden;
+			margin-top: 14px;
+			border-radius: var(--radius);
+			box-shadow: var(--shadow);
+		}
+		.tabpanel {
+			display: none;
+			grid-area: 1 / 1;
+			padding: 10px 16px;
+			background-color: #fff;
+		}
+		.tabpanel.is-active {
+			display: block;
+		}
+		.tabpanel-date {
+			display: flex;
+			justify-content: space-between;
+			margin: 12px 0 24px;
+			font-size: 12px;
+			color: #4e4e4e;
+			text-align: right;
+		}
+		.tabpanel-reference {
+			background-color: #fdf4f6;
+			border-radius: 10px;
+			color: #333;
+			padding: 12px;
+			margin: 10px 0;
+			font-size: 12px;
+		}
+
+		.table {
+			display: grid;
+    		row-gap: 4px;
+		}
+		.table-row {
+			display: grid;
+			grid-template-columns: 20% 60% 20%;
+			gap: 6px 0;
+		}
+		/* .table-time {
+			padding: 0 6px;
+			border-right: 1px solid #4e4e4e;
+		} */
+		.table-value__location {
+			padding: 2px 3px;
+			background: linear-gradient(45deg,#ffeaee 25%, #fff 0, #fff 50%,#ffeaee 0, #ffeaee 75%, #fff 0);
+  			background-size:10px 10px;
+			font-size: 8px;
+			border: 1px solid #ffa4b5;
+		}
+		@media screen and (min-width: 1024px) {}
+	</style>
+
+	<h1 class="headline">2026 오사카 여행🏯</h1>
+	<div class="info">
+		<div class="info-box">
+			<div class="info-icon">📅</div>
+			<div class="info-text">기간</div>
+			<div class="info-text">2026.08.14 ~ 18</div>
+		</div>
+		<div class="info-box">
+			<div class="info-icon">📍</div>
+			<div class="info-text">장소</div>
+			<div class="info-text">오사카, 교토</div>
+		</div>
+		<div class="info-box">
+			<div class="info-icon">💵</div>
+			<div class="info-text">budget</div>
+			<div class="info-text">1,300,000원</div>
+			<div class="info-desc">(1인당)</div>
+		</div>
+		<div class="info-box">
+			<div class="info-icon">💸</div>
+			<div class="info-text">Total cost</div>
+			<div class="info-text"><span class="total"></span>원</div>
+			<div class="info-desc">(1인당)</div>
+		</div>
+	</div>
+	<div class="schedule">
+		<ul role="tablist" class="tab">
+			<li role="tab" class="tab-list is-active">
+				<button type="button" id="tabButton1" class="tab-button" aria-selected="true">
+					<span class="tab-icon">1</span>
+					<span class="tab-text">DAY</span>
+				</button>
+			</li>
+			<li role="tab" class="tab-list">
+				<button type="button" id="tabButton2" class="tab-button" aria-selected="false">
+					<span class="tab-icon">2</span>
+					<span class="tab-text">DAY</span>
+				</button>
+			</li>
+			<li role="tab" class="tab-list">
+				<button type="button" id="tabButton3" class="tab-button" aria-selected="false">
+					<span class="tab-icon">3</span>
+					<span class="tab-text">DAY</span>
+				</button>
+			</li>
+			<li role="tab" class="tab-list">
+				<button type="button" id="tabButton4" class="tab-button" aria-selected="false">
+					<span class="tab-icon">4</span>
+					<span class="tab-text">DAY</span>
+				</button>
+			</li>
+			<li role="tab" class="tab-list">
+				<button type="button" id="tabButton5" class="tab-button" aria-selected="false">
+					<span class="tab-icon">5</span>
+					<span class="tab-text">DAY</span>
+				</button>
+			</li>
+		</ul>
+		<div class="tabpanel-wrap">
+			<div role="tabpanel" aria-labelledby="tabButton1" class="tabpanel">
+				<div class="tabpanel-date">
+					<span>📍오사카</span>
+					<span class="date">2026년 08월 14일 금요일</span>
+				</div>
+
+				<div class="tabpanel-reference">
+					📢 왕복 비행기 : <span class="cost">328400</span>
+				</div>
+				
+				<div class="table">
+					<div class="table-row">
+						<div class="table-time">05:30</div>
+						<div class="table-value">
+							<div class="table-value__inner">공항 출발</div>
+						</div>
+						<div class="table-link">값 B</div>
+					</div>
+					<div class="table-row">
+						<div class="table-time">07:00</div>
+						<div class="table-value">
+							<div class="table-value__inner">공항 도착</div>
+							<a href="" class="table-value__location">주차장</a>
+						</div>
+						<div class="table-link"><a href=""></a></div>
+					</div>
+					<div class="table-row">
+						<div class="table-time">11:10</div>
+						<div class="table-value">
+							<div class="table-value__inner">출국(HKT9RL)</div>
+							<a href="https://maps.app.goo.gl/AaiqViTWChRciFTJA" class="table-value__location">인천국제공항 제1 터미널</a>
+						</div>
+						<div class="table-link"><a href="https://mobile.whypaymore.co.kr/m/account/login/pnr?SEtUOVJMXg%3d%3d">✅</a></div>
+					</div>
+				</div>
+
+			</div>
+			<div role="tabpanel" aria-labelledby="tabButton2" class="tabpanel">
+				<div class="tabpanel-date">
+					<span>📍오사카</span>
+					<span class="date">2026년 08월 15일 토요일</span>
+				</div>
+			</div>
+			<div role="tabpanel" aria-labelledby="tabButton3" class="tabpanel">
+				<div class="tabpanel-date">
+					<span>📍교토</span>
+					<span class="date">2026년 08월 16일 일요일</span>
+				</div>
+				<a href="https://www.agoda.com/ko-kr/account/bookings.html?products=hotels&ds=FQtVyB6qI2PdTx4e" target="_blank">예약 확인</a>숙소 : 교토 우메코지 카덴쇼 <span class="cost">231243</span>
+				
+			</div>
+			<div role="tabpanel" aria-labelledby="tabButton4" class="tabpanel">
+				<div class="tabpanel-date">
+					<span>📍교토</span>
+					<span class="date">2026년 08월 17일 월요일</span>
+				</div>
+			</div>
+			<div role="tabpanel" aria-labelledby="tabButton5" class="tabpanel">
+				<div class="tabpanel-date">
+					<span>📍교토</span>
+					<span class="date">2026년 08월 18일 화요일</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		let els = {};
+
+		function setElement () {
+			els.buttons = document.querySelectorAll('.tab-list');
+			els.panels = document.querySelectorAll('.tabpanel');
+			els.panels = document.querySelectorAll('.tabpanel');
+
+			els.cost = document.querySelectorAll('.cost');
+			els.total = document.querySelector('.total');
+		};
+
+		function activeTabButton () {
+			els.buttons.forEach(function (button, index) {
+				button.addEventListener('click', function () {
+				
+					els.buttons.forEach(function (btn) {
+						btn.classList.remove('is-active');
+						btn.querySelector('.tab-button').setAttribute('aria-selected', 'false');
+					});
+					
+					button.classList.add('is-active');
+					button.querySelector('.tab-button').setAttribute('aria-selected', 'true');
+					
+					activeTabPanel(index);
+				});
+			});
+		};
+
+		function activeTabPanel (activeIndex) {
+			els.panels.forEach(function (panel, index) {
+				if (index === activeIndex) {
+					panel.classList.add('is-active');
+				} else {
+					panel.classList.remove('is-active');
+				}
+			});
+		};
+
+		function setCostNumber () {
+			els.cost.forEach (function (element) {
+				const price = Number(element.innerText); 
+			
+				element.innerText = price.toLocaleString();
+			});
+		}
+
+		function totalAccout () {
+			let total = 0
+
+			els.cost.forEach (function (element) {
+				const price = Number(element.textContent); 
+				total += price; 
+			});
+
+			els.total.innerText = total.toLocaleString();
+			return total;
+		};
+
+		function init () {
+			setElement();
+			totalAccout();
+			setCostNumber();
+			
+			activeTabButton();
+			activeTabPanel(0);
+		};
+
+		document.addEventListener('DOMContentLoaded', init);
+	</script>
+</body>
+</html>
