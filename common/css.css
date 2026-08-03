@@ -1,5 +1,5 @@
 
-body {max-width: 534px;width: 90%;margin: 60px auto;background-color: #f8f8f8;font-family: 'MemomentKkukkukk', sans-serif;font-size: 14px;}
+body {max-width: 534px;width: 90%;margin: 60px auto;background-color: #f8f8f8;font-family: 'MemomentKkukkukk', sans-serif;font-size: 14px;color: #333;}
 ul {list-style: none;padding: 0;margin: 0;}
 button, a {all: unset}
 :root {
