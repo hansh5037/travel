@@ -3,10 +3,11 @@ let els = {};
 function setElement () {
 	els.buttons = document.querySelectorAll('.tab-list');
 	els.panels = document.querySelectorAll('.tabpanel');
-	els.panels = document.querySelectorAll('.tabpanel');
 
 	els.cost = document.querySelectorAll('.cost');
+	els.costTwo = document.querySelectorAll('.cost-two');
 	els.total = document.querySelector('.total');
+	els.todayTotal = document.querySelector('.today-total-cost');
 };
 
 function activeTabButton () {
@@ -34,6 +35,8 @@ function activeTabPanel (activeIndex) {
 			panel.classList.remove('is-active');
 		}
 	});
+
+	els.todayTotal.innerText = els.dayTotals[activeIndex].toLocaleString();
 };
 
 function setCostNumber () {
@@ -45,11 +48,32 @@ function setCostNumber () {
 }
 
 function totalAccout () {
-	let total = 0
+	let total = 0;
+	const accout = [];
 
-	els.cost.forEach (function (element) {
-		const price = Number(element.textContent); 
-		total += price; 
+	els.panels.forEach (function (panel) {
+		const day = { cost: [], costTwo: [], todayTotal: 0 };
+
+		panel.querySelectorAll('.cost').forEach (function (element) {
+			const price = Number(element.textContent);
+			day.cost.push(price);
+			day.todayTotal += price;
+		});
+
+		panel.querySelectorAll('.cost-two').forEach (function (element) {
+			const price = Number(element.textContent) / 2;
+			day.costTwo.push(price);
+			day.todayTotal += price;
+		});
+
+		accout.push(day);
+		total += day.todayTotal;
+	});
+
+	console.log(accout);
+
+	els.dayTotals = accout.map(function (day) {
+		return day.todayTotal;
 	});
 
 	els.total.innerText = total.toLocaleString();

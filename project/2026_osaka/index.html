@@ -8,127 +8,199 @@
 	<link rel="stylesheet" href="../2026_osaka/css/style.css">
 </head>
 <body>
-	<h1 class="headline">2026 오사카 여행🏯</h1>
-	<div class="info">
-		<div class="info-box">
-			<div class="info-icon">📅</div>
-			<div class="info-text">기간</div>
-			<div class="info-text">2026.08.14 ~ 18</div>
+	<div class="common-inner">
+		<h1 class="headline">2026 오사카 여행🏯</h1>
+		<div class="info">
+			<div class="info-box">
+				<div class="info-icon">📅</div>
+				<div class="info-text">기간</div>
+				<div class="info-text">2026.08.14 ~ 18</div>
+			</div>
+			<div class="info-box">
+				<div class="info-icon">📍</div>
+				<div class="info-text">장소</div>
+				<div class="info-text">오사카, 교토</div>
+			</div>
+			<div class="info-box">
+				<div class="info-icon">💵</div>
+				<div class="info-text">budget</div>
+				<div class="info-text">1,300,000원</div>
+				<div class="info-desc">(1인당)</div>
+			</div>
+			<div class="info-box">
+				<div class="info-icon">💸</div>
+				<div class="info-text">Total cost</div>
+				<div class="info-text"><span class="total"></span>원</div>
+				<div class="info-desc">(1인당)</div>
+			</div>
 		</div>
-		<div class="info-box">
-			<div class="info-icon">📍</div>
-			<div class="info-text">장소</div>
-			<div class="info-text">오사카, 교토</div>
-		</div>
-		<div class="info-box">
-			<div class="info-icon">💵</div>
-			<div class="info-text">budget</div>
-			<div class="info-text">1,300,000원</div>
-			<div class="info-desc">(1인당)</div>
-		</div>
-		<div class="info-box">
-			<div class="info-icon">💸</div>
-			<div class="info-text">Total cost</div>
-			<div class="info-text"><span class="total"></span>원</div>
-			<div class="info-desc">(1인당)</div>
-		</div>
-	</div>
-	<div class="schedule">
-		<ul role="tablist" class="tab">
-			<li role="tab" class="tab-list is-active">
-				<button type="button" id="tabButton1" class="tab-button" aria-selected="true">
-					<span class="tab-icon">1</span>
-					<span class="tab-text">DAY</span>
-				</button>
-			</li>
-			<li role="tab" class="tab-list">
-				<button type="button" id="tabButton2" class="tab-button" aria-selected="false">
-					<span class="tab-icon">2</span>
-					<span class="tab-text">DAY</span>
-				</button>
-			</li>
-			<li role="tab" class="tab-list">
-				<button type="button" id="tabButton3" class="tab-button" aria-selected="false">
-					<span class="tab-icon">3</span>
-					<span class="tab-text">DAY</span>
-				</button>
-			</li>
-			<li role="tab" class="tab-list">
-				<button type="button" id="tabButton4" class="tab-button" aria-selected="false">
-					<span class="tab-icon">4</span>
-					<span class="tab-text">DAY</span>
-				</button>
-			</li>
-			<li role="tab" class="tab-list">
-				<button type="button" id="tabButton5" class="tab-button" aria-selected="false">
-					<span class="tab-icon">5</span>
-					<span class="tab-text">DAY</span>
-				</button>
-			</li>
-		</ul>
-		<div class="tabpanel-wrap">
-			<div role="tabpanel" aria-labelledby="tabButton1" class="tabpanel">
-				<div class="tabpanel-date">
-					<span>📍오사카</span>
-					<span class="date">2026년 08월 14일 금요일</span>
-				</div>
+		<picture class="bg">
+			<img src="../2026_osaka/images/project-2026-osaka-bg.jpeg">
+		</picture>
+		<div class="schedule">
+			<ul role="tablist" class="tab">
+				<li role="tab" class="tab-list is-active">
+					<button type="button" id="tabButton1" class="tab-button" aria-selected="true">
+						<span class="tab-icon">1</span>
+						<span class="tab-text">DAY</span>
+					</button>
+				</li>
+				<li role="tab" class="tab-list">
+					<button type="button" id="tabButton2" class="tab-button" aria-selected="false">
+						<span class="tab-icon">2</span>
+						<span class="tab-text">DAY</span>
+					</button>
+				</li>
+				<li role="tab" class="tab-list">
+					<button type="button" id="tabButton3" class="tab-button" aria-selected="false">
+						<span class="tab-icon">3</span>
+						<span class="tab-text">DAY</span>
+					</button>
+				</li>
+				<li role="tab" class="tab-list">
+					<button type="button" id="tabButton4" class="tab-button" aria-selected="false">
+						<span class="tab-icon">4</span>
+						<span class="tab-text">DAY</span>
+					</button>
+				</li>
+				<li role="tab" class="tab-list">
+					<button type="button" id="tabButton5" class="tab-button" aria-selected="false">
+						<span class="tab-icon">5</span>
+						<span class="tab-text">DAY</span>
+					</button>
+				</li>
+			</ul>
+			<div class="tabpanel-wrap">
+				<div role="tabpanel" aria-labelledby="tabButton1" class="tabpanel">
+					<div class="tabpanel-date">
+						<span>📍오사카</span>
+						<span class="date">2026년 08월 14일 금요일</span>
+					</div>
 
-				<div class="tabpanel-reference">
-					📢 왕복 비행기 : <span class="cost">328400</span>
-				</div>
-				
-				<div class="table">
-					<div class="table-row">
-						<div class="table-time">05:30</div>
-						<div class="table-value">
-							<div class="table-value__inner">공항 출발</div>
-						</div>
-						<div class="table-link">값 B</div>
+					<div class="tabpanel-reference">
+						📢 왕복 비행기 : <span class="cost">328400</span>
 					</div>
-					<div class="table-row">
-						<div class="table-time">07:00</div>
-						<div class="table-value">
-							<div class="table-value__inner">공항 도착</div>
-							<a href="https://maps.app.goo.gl/xKY5QUECyvpN8nrG6" target="_blank" class="table-value__location">주차장</a>
+					
+					<div class="table">
+						<div class="table-row">
+							<div class="table-time">05:30</div>
+							<div class="table-value">
+								<div class="table-value__inner">공항 출발</div>
+							</div>
 						</div>
-						<div class="table-link">약 <span class="cost">9000</span>원</div>
-					</div>
-					<div class="table-row">
-						<div class="table-time">11:10</div>
-						<div class="table-value">
-							<div class="table-value__inner">출국(HKT9RL)</div>
-							<a href="https://maps.app.goo.gl/AaiqViTWChRciFTJA" target="_blank" class="table-value__location">인천국제공항 제1 터미널</a>
+						<div class="table-row">
+							<div class="table-time">07:00</div>
+							<div class="table-value">
+								<div class="table-value__inner">공항 도착</div>
+								<div class="table-value__location-wrap">
+									<a href="https://maps.app.goo.gl/xKY5QUECyvpN8nrG6" target="_blank" class="table-value__location">📍주차장</a>
+								</div>
+								<div class="table-value__location-wrap">
+									<a href="https://www.airport.kr/geomap/ap_ko/view.do?type=1&alertType=undefined&poiId=2142#/search" target="_blank" class="table-value__location">📍라운지 위치</a>
+								</div>
+							</div>
+							<div class="table-link">주차비 약 <span class="cost-two">18000</span>원</div>
 						</div>
-						<div class="table-link"><a href="https://mobile.whypaymore.co.kr/m/account/login/pnr?SEtUOVJMXg%3d%3d" target="_blank">✅ </a> 파라타 항공(WE511)</div>
+						<div class="table-row">
+							<div class="table-time">11:10</div>
+							<div class="table-value">
+								<div class="table-value__inner">출국(HKT9RL)</div>
+								<div class="table-value__location-wrap">
+									<a href="https://maps.app.goo.gl/AaiqViTWChRciFTJA" target="_blank" class="table-value__location">📍인천국제공항 제1 터미널</a>
+								</div>
+							</div>
+							<div class="table-link"><a href="https://mobile.whypaymore.co.kr/m/account/login/pnr?SEtUOVJMXg%3d%3d" target="_blank">✅ </a> 파라타 항공(WE511)</div>
+						</div>
+						<div class="table-row">
+							<div class="table-time">12:30</div>
+							<div class="table-value">
+								<div class="table-value__inner">숙소</div>
+								<div class="table-value__location-wrap">
+									<a href="https://maps.app.goo.gl/uqidwpQBy9aUJhYX7" target="_blank" class="table-value__location">📍리가 플에이스 히고바시</a>
+								</div>
+							</div>
+							<div class="table-link">
+								<a href="../2026_osaka/files/osaka_agoda.pdf" target="_blank">✅ 예약 확정서</a>, 
+								짐 맡겨놓기
+								<span class="cost-two">154818</span>
+							</div>
+						</div>
 					</div>
-				</div>
 
-			</div>
-			<div role="tabpanel" aria-labelledby="tabButton2" class="tabpanel">
-				<div class="tabpanel-date">
-					<span>📍오사카</span>
-					<span class="date">2026년 08월 15일 토요일</span>
+				</div>
+				<div role="tabpanel" aria-labelledby="tabButton2" class="tabpanel">
+					<div class="tabpanel-date">
+						<span>📍오사카</span>
+						<span class="date">2026년 08월 15일 토요일</span>
+					</div>
+				</div>
+				<div role="tabpanel" aria-labelledby="tabButton3" class="tabpanel">
+					<div class="tabpanel-date">
+						<span>📍교토</span>
+						<span class="date">2026년 08월 16일 일요일</span>
+					</div>
+
+					<div class="table">
+						<div class="table-row">
+							<div class="table-time">11:10</div>
+							<div class="table-value">
+								<div class="table-value__inner">교토 우메코지 카덴쇼</div>
+								<div class="table-value__location-wrap">
+									<a href="https://maps.app.goo.gl/QoGN3tjs64pYsXKJ7" target="_blank" class="table-value__location">📍교토 우메코지 카덴쇼</a>
+								</div>
+							</div>
+							<div class="table-link"><a href="https://www.agoda.com/ko-kr/account/bookings.html?products=hotels&ds=FQtVyB6qI2PdTx4e" target="_blank">✅ </a><span class="cost">231243</span>원</div>
+						</div>
+					</div>
+					
+				</div>
+				<div role="tabpanel" aria-labelledby="tabButton4" class="tabpanel">
+					<div class="tabpanel-date">
+						<span>📍교토</span>
+						<span class="date">2026년 08월 17일 월요일</span>
+					</div>
+				</div>
+				<div role="tabpanel" aria-labelledby="tabButton5" class="tabpanel">
+					<div class="tabpanel-date">
+						<span>📍교토</span>
+						<span class="date">2026년 08월 18일 화요일</span>
+					</div>
+
+					<div class="tabpanel-reference">
+					</div>
+					
+					<div class="table">
+						<div class="table-row">
+							<div class="table-time">10:30</div>
+							<div class="table-value">
+								<div class="table-value__inner">공항 출발</div>
+							</div>
+							<div class="table-link">값 B</div>
+						</div>
+						<div class="table-row">
+							<div class="table-time">11:30</div>
+							<div class="table-value">
+								<div class="table-value__inner">공항 도착</div>
+							</div>
+						</div>
+						<div class="table-row">
+							<div class="table-time">14:35</div>
+							<div class="table-value">
+								<div class="table-value__inner">출국(HKT9RL)</div>
+								<div class="table-value__location-wrap">
+									<a href="https://maps.app.goo.gl/mvoVGxpUzCpm4Bgd9" target="_blank" class="table-value__location">📍간사이공항 1터미널</a>
+								</div>
+							</div>
+							<div class="table-link"><a href="https://mobile.whypaymore.co.kr/m/account/login/pnr?SEtUOVJMXg%3d%3d" target="_blank">✅ </a> 파라타 항공(WE512)</div>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div role="tabpanel" aria-labelledby="tabButton3" class="tabpanel">
-				<div class="tabpanel-date">
-					<span>📍교토</span>
-					<span class="date">2026년 08월 16일 일요일</span>
-				</div>
-				<a href="https://www.agoda.com/ko-kr/account/bookings.html?products=hotels&ds=FQtVyB6qI2PdTx4e" target="_blank">예약 확인</a>숙소 : 교토 우메코지 카덴쇼 <span class="cost">231243</span>
-				
-			</div>
-			<div role="tabpanel" aria-labelledby="tabButton4" class="tabpanel">
-				<div class="tabpanel-date">
-					<span>📍교토</span>
-					<span class="date">2026년 08월 17일 월요일</span>
-				</div>
-			</div>
-			<div role="tabpanel" aria-labelledby="tabButton5" class="tabpanel">
-				<div class="tabpanel-date">
-					<span>📍교토</span>
-					<span class="date">2026년 08월 18일 화요일</span>
-				</div>
+			<div class="today-cost">
+				<button type="button" class="today-cost-button"><span class="today-cost-arrow">▼ </span>오늘 사용금액 : <span class="today-total-cost"></span>원</button>
+				<ol role="list" class="today-cost-list">
+					<li role="listitem" class="today-cost-listitem"></li>
+				</ol>
 			</div>
 		</div>
 	</div>
