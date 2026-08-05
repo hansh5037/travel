@@ -4,16 +4,6 @@
 	text-align: center;
 }
 
-/* bg */
-.bg {
-	position: absolute;
-	top: 0;
-	left: 0;
-	right: 0;
-	width: 100vw;
-	z-index: -1;
-}
-
 /* info */
 .info {
 	display: flex;
@@ -38,9 +28,28 @@
 	color: #8d8d8d;
 }
 
+/* bg */
+.tab {
+	position: relative;
+}
+.tab::before {
+    z-index: -1;
+	content: '';
+    position: absolute;
+    bottom: 60%;
+    left: 50%;
+    right: 0;
+    width: 100vw;
+	max-width: 534px;
+    transform: translateX(-50%);
+    background-image: url(../images/project-2026-osaka-bg.jpeg);
+    background-repeat: no-repeat;
+    aspect-ratio: 2128 / 1462;
+    background-size: cover;
+}
+
 /* 탭버튼 */
 .tab {
-	overflow: hidden;
 	display: flex;
 	justify-content: space-between;
 	background: #ffff;
