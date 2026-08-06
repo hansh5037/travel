@@ -1,6 +1,7 @@
 let els = {};
 
-const EXTRA_COST_STORAGE_KEY = 'osaka2026-extra-costs';
+const EXTRA_COST_POLL_INTERVAL = 15000;
+let extraCostsCache = {};
 
 function setElement() {
     els.buttons = document.querySelectorAll('.tab-list');
@@ -20,16 +21,27 @@ function setElement() {
     els.activeIndex = 0;
 };
 
-function loadExtraCosts() {
-    try {
-        return JSON.parse(localStorage.getItem(EXTRA_COST_STORAGE_KEY)) || {};
-    } catch (e) {
-        return {};
-    }
+function fetchExtraCosts() {
+    return fetch(SHEETS_WEB_APP_URL)
+        .then(function (response) { return response.json(); })
+        .then(function (rows) {
+            extraCostsCache = {};
+
+            rows.forEach(function (row) {
+                if (!extraCostsCache[row.day]) {
+                    extraCostsCache[row.day] = [];
+                }
+                extraCostsCache[row.day].push({ id: row.id, key: row.key, price: row.price });
+            });
+
+            totalAccout();
+            activeTabPanel(els.activeIndex);
+        });
 };
 
-function saveExtraCosts(extraData) {
-    localStorage.setItem(EXTRA_COST_STORAGE_KEY, JSON.stringify(extraData));
+function bindExtraCostSync() {
+    fetchExtraCosts();
+    setInterval(fetchExtraCosts, EXTRA_COST_POLL_INTERVAL);
 };
 
 function addExtraCost() {
@@ -40,20 +52,13 @@ function addExtraCost() {
         return;
     }
 
-    const index = els.activeIndex;
-    const extraData = loadExtraCosts();
-
-    if (!extraData[index]) {
-        extraData[index] = [];
-    }
-    extraData[index].push({ key: desc, price: price });
-    saveExtraCosts(extraData);
+    fetch(SHEETS_WEB_APP_URL, {
+        method: 'POST',
+        body: new URLSearchParams({ action: 'add', day: els.activeIndex, desc: desc, price: price })
+    }).then(fetchExtraCosts);
 
     els.extraDesc.value = '';
     els.extraPrice.value = '';
-
-    totalAccout();
-    activeTabPanel(index);
 };
 
 function bindExtraCostForm() {
@@ -112,37 +117,37 @@ function setCostNumber() {
     });
 }
 
-function totalAccout() {
-    let total = 0;
-    const accout = [];
-    const extraData = loadExtraCosts();
-
-    els.panels.forEach(function (panel, index) {
-        const day = {
-            cost: [],
-            costTwo: [],
-            extra: extraData[index] || [],
-            todayTotal: 0
-        };
+function buildStaticDayCosts() {
+    return Array.prototype.map.call(els.panels, function (panel) {
+        const day = { cost: [], costTwo: [], staticTotal: 0 };
 
         panel.querySelectorAll('.cost').forEach(function (element) {
             const price = Number(element.textContent);
             day.cost.push({ key: element.dataset.key || '', price: price });
-            day.todayTotal += price;
+            day.staticTotal += price;
         });
 
         panel.querySelectorAll('.cost-two').forEach(function (element) {
             const price = Number(element.textContent) / 2;
             day.costTwo.push({ key: element.dataset.key || '', price: price });
-            day.todayTotal += price;
+            day.staticTotal += price;
         });
 
-        day.extra.forEach(function (item) {
-            day.todayTotal += item.price;
-        });
+        return day;
+    });
+};
 
-        accout.push(day);
-        total += day.todayTotal;
+function totalAccout() {
+    let total = 0;
+
+    const accout = els.staticDays.map(function (staticDay, index) {
+        const extra = extraCostsCache[index] || [];
+        const extraTotal = extra.reduce(function (sum, item) { return sum + item.price; }, 0);
+        const todayTotal = staticDay.staticTotal + extraTotal;
+
+        total += todayTotal;
+
+        return { cost: staticDay.cost, costTwo: staticDay.costTwo, extra: extra, todayTotal: todayTotal };
     });
 
     els.dayTotals = accout.map(function (day) {
@@ -164,7 +169,7 @@ function setCostList(day) {
 		els.todayTotalist.appendChild(li);
 	});
 
-	(day.extra || []).forEach(function (item, extraIndex) {
+	(day.extra || []).forEach(function (item) {
 		const li = document.createElement('li');
 		li.classList.add('today-cost-listitem');
 
@@ -176,25 +181,18 @@ function setCostList(day) {
 		removeBtn.type = 'button';
 		removeBtn.classList.add('today-cost-listitem__remove');
 		removeBtn.textContent = '삭제';
-		removeBtn.dataset.extraIndex = extraIndex;
+		removeBtn.dataset.extraId = item.id;
 		li.appendChild(removeBtn);
 
 		els.todayTotalist.appendChild(li);
 	});
 };
 
-function removeExtraCost(extraIndex) {
-    const index = els.activeIndex;
-    const extraData = loadExtraCosts();
-
-    if (!extraData[index]) {
-        return;
-    }
-    extraData[index].splice(extraIndex, 1);
-    saveExtraCosts(extraData);
-
-    totalAccout();
-    activeTabPanel(index);
+function removeExtraCost(itemId) {
+    fetch(SHEETS_WEB_APP_URL, {
+        method: 'POST',
+        body: new URLSearchParams({ action: 'delete', id: itemId })
+    }).then(fetchExtraCosts);
 };
 
 function bindCostList() {
@@ -204,18 +202,20 @@ function bindCostList() {
         if (!removeBtn) {
             return;
         }
-        removeExtraCost(Number(removeBtn.dataset.extraIndex));
+        removeExtraCost(removeBtn.dataset.extraId);
     });
 };
 
 function init() {
     setElement();
+    els.staticDays = buildStaticDayCosts();
     totalAccout();
     setCostNumber();
 
     bindExtraCostForm();
     bindCostList();
     bindTodayCostToggle();
+    bindExtraCostSync();
 
     activeTabButton();
     activeTabPanel(0);
