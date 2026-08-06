@@ -11,27 +11,30 @@ function doGet(e) {
 
 function doPost(e) {
   const action = e.parameter.action;
+  const sheet = getSheet();
 
   if (action === 'add') {
-    const sheet = getSheet();
     const id = Utilities.getUuid();
     const day = e.parameter.day;
-    const desc = e.parameter.desc || '';
+    const key = e.parameter.desc || '';
     const price = Number(e.parameter.price);
 
-    sheet.appendRow([id, day, desc, price]);
+    sheet.appendRow([id, day, key, price]);
     return jsonResponse({ ok: true, id: id });
   }
 
   if (action === 'delete') {
-    const sheet = getSheet();
     const id = e.parameter.id;
-    const data = sheet.getDataRange().getValues();
+    const lastRow = sheet.getLastRow();
 
-    for (let i = 1; i < data.length; i++) {
-      if (data[i][0] === id) {
-        sheet.deleteRow(i + 1);
-        break;
+    if (lastRow > 1) {
+      const ids = sheet.getRange(2, 1, lastRow - 1, 1).getValues();
+
+      for (let i = 0; i < ids.length; i++) {
+        if (ids[i][0] === id) {
+          sheet.deleteRow(i + 2);
+          break;
+        }
       }
     }
     return jsonResponse({ ok: true });

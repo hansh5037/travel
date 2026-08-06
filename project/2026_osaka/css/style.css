@@ -29,10 +29,10 @@
 }
 
 /* bg */
-.tab {
+.tab-bg {
 	position: relative;
 }
-.tab::before {
+.tab-bg::before {
     z-index: -1;
 	content: '';
     position: absolute;
@@ -40,7 +40,7 @@
     left: 50%;
     right: 0;
     width: 100vw;
-	max-width: 534px;
+	max-width: var(--content-max-width);
     transform: translateX(-50%);
     background-image: url(../images/project-2026-osaka-bg.jpeg);
     background-repeat: no-repeat;
@@ -179,20 +179,31 @@
 }
 .today-cost-arrow {
 	display: inline-block;
-	width: 12px;
-	padding: 0 4px;
-	transition: transform .3s ease;
-}
-.is-active .today-cost-arrow {
-	transform: scale(-1);
-	transform-origin: center;
+	width: 30px;
+	height: 30px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-image: url(../images/project-2026-osaka-wallet.svg);
 }
 .today-cost-body {
 	display: grid;
 	grid-template-rows: 0fr;
 	transition: grid-template-rows .3s ease;
 }
-.today-cost-button.is-active + .today-cost-body {
+.today-cost-button {
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+.today-cost-text {
+	display: flex;
+	flex-direction: column;
+}
+.today-total-cost::after {
+	content: '원';
+}
+.today-cost.is-active .today-cost-body {
 	grid-template-rows: 1fr;
 }
 .today-cost-body__inner {
@@ -212,10 +223,14 @@
 	width: 90px;
 }
 .today-cost-form__desc,
-.today-cost-form__price {
-	padding: 6px 8px;
+.today-cost-form__price,
+.today-cost-list-item__remove {
 	border: 1px solid #e0e0e0;
 	border-radius: 6px;
+}
+.today-cost-form__desc,
+.today-cost-form__price {
+	padding: 6px 8px;
 	font-size: 12px;
 }
 .today-cost-form__add {
@@ -226,16 +241,15 @@
 	font-size: 12px;
 	white-space: nowrap;
 }
-.today-cost-listitem {
+.today-cost-list-item {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	gap: 8px;
+	margin: 10px;
 }
-.today-cost-listitem__remove {
+.today-cost-list-item__remove {
 	padding: 2px 8px;
-	border: 1px solid #e0e0e0;
-	border-radius: 6px;
 	color: #8d8d8d;
 	font-size: 10px;
 	white-space: nowrap;

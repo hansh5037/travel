@@ -7,11 +7,10 @@ function setElement() {
     els.buttons = document.querySelectorAll('.tab-list');
     els.panels = document.querySelectorAll('.tabpanel');
 
-    els.cost = document.querySelectorAll('.cost');
-    els.costTwo = document.querySelectorAll('.cost-two');
     els.total = document.querySelector('.total');
     els.todayTotal = document.querySelector('.today-total-cost');
-    els.todayTotalist = document.querySelector('.today-cost-list');
+    els.todayCostList = document.querySelector('.today-cost-list');
+    els.todayCost = document.querySelector('.today-cost');
     els.todayCostButton = document.querySelector('.today-cost-button');
 
     els.extraDesc = document.querySelector('.today-cost-form__desc');
@@ -21,19 +20,63 @@ function setElement() {
     els.activeIndex = 0;
 };
 
+function buildStaticDayCosts() {
+    return Array.prototype.map.call(els.panels, function (panel) {
+        const day = { cost: [], costTwo: [], staticTotal: 0 };
+
+        panel.querySelectorAll('.cost').forEach(function (element) {
+            const price = Number(element.textContent);
+            element.textContent = price.toLocaleString();
+            day.cost.push({ key: element.dataset.key || '', price: price });
+            day.staticTotal += price;
+        });
+
+        panel.querySelectorAll('.cost-two').forEach(function (element) {
+            const price = Number(element.textContent) / 2;
+            day.costTwo.push({ key: element.dataset.key || '', price: price });
+            day.staticTotal += price;
+        });
+
+        return day;
+    });
+};
+
+function postExtraCost(params) {
+    return fetch(SHEETS_WEB_APP_URL, {
+        method: 'POST',
+        body: new URLSearchParams(params)
+    }).then(function (response) { return response.json(); });
+};
+
+function applyExtraCostsUpdate(dayIndex, updateFn) {
+    extraCostsCache[dayIndex] = updateFn(extraCostsCache[dayIndex] || []);
+
+    totalAccout();
+    activeTabPanel(els.activeIndex);
+};
+
 function fetchExtraCosts() {
+    if (document.hidden) {
+        return Promise.resolve();
+    }
+
     return fetch(SHEETS_WEB_APP_URL)
         .then(function (response) { return response.json(); })
         .then(function (rows) {
-            extraCostsCache = {};
+            const nextCache = {};
 
             rows.forEach(function (row) {
-                if (!extraCostsCache[row.day]) {
-                    extraCostsCache[row.day] = [];
+                if (!nextCache[row.day]) {
+                    nextCache[row.day] = [];
                 }
-                extraCostsCache[row.day].push({ id: row.id, key: row.key, price: row.price });
+                nextCache[row.day].push({ id: row.id, key: row.key, price: row.price });
             });
 
+            if (JSON.stringify(nextCache) === JSON.stringify(extraCostsCache)) {
+                return;
+            }
+
+            extraCostsCache = nextCache;
             totalAccout();
             activeTabPanel(els.activeIndex);
         });
@@ -52,13 +95,26 @@ function addExtraCost() {
         return;
     }
 
-    fetch(SHEETS_WEB_APP_URL, {
-        method: 'POST',
-        body: new URLSearchParams({ action: 'add', day: els.activeIndex, desc: desc, price: price })
-    }).then(fetchExtraCosts);
+    const dayIndex = els.activeIndex;
+
+    postExtraCost({ action: 'add', day: dayIndex, desc: desc, price: price }).then(function (result) {
+        applyExtraCostsUpdate(dayIndex, function (items) {
+            return items.concat([{ id: result.id, key: desc, price: price }]);
+        });
+    });
 
     els.extraDesc.value = '';
     els.extraPrice.value = '';
+};
+
+function removeExtraCost(itemId) {
+    const dayIndex = els.activeIndex;
+
+    postExtraCost({ action: 'delete', id: itemId }).then(function () {
+        applyExtraCostsUpdate(dayIndex, function (items) {
+            return items.filter(function (item) { return item.id !== itemId; });
+        });
+    });
 };
 
 function bindExtraCostForm() {
@@ -73,7 +129,7 @@ function bindExtraCostForm() {
 
 function bindTodayCostToggle() {
     els.todayCostButton.addEventListener('click', function () {
-        els.todayCostButton.classList.toggle('is-active');
+        els.todayCost.classList.toggle('is-active');
     });
 };
 
@@ -105,36 +161,10 @@ function activeTabPanel(activeIndex) {
         }
     });
 
-    els.todayTotal.innerText = els.dayTotals[activeIndex].toLocaleString();
-    setCostList(els.dayItems[activeIndex]);
-};
+    const day = els.dayItems[activeIndex];
 
-function setCostNumber() {
-    els.cost.forEach(function (element) {
-        const price = Number(element.innerText);
-
-        element.innerText = price.toLocaleString();
-    });
-}
-
-function buildStaticDayCosts() {
-    return Array.prototype.map.call(els.panels, function (panel) {
-        const day = { cost: [], costTwo: [], staticTotal: 0 };
-
-        panel.querySelectorAll('.cost').forEach(function (element) {
-            const price = Number(element.textContent);
-            day.cost.push({ key: element.dataset.key || '', price: price });
-            day.staticTotal += price;
-        });
-
-        panel.querySelectorAll('.cost-two').forEach(function (element) {
-            const price = Number(element.textContent) / 2;
-            day.costTwo.push({ key: element.dataset.key || '', price: price });
-            day.staticTotal += price;
-        });
-
-        return day;
-    });
+    els.todayTotal.innerText = day.todayTotal.toLocaleString();
+    setCostList(day);
 };
 
 function totalAccout() {
@@ -150,54 +180,54 @@ function totalAccout() {
         return { cost: staticDay.cost, costTwo: staticDay.costTwo, extra: extra, todayTotal: todayTotal };
     });
 
-    els.dayTotals = accout.map(function (day) {
-        return day.todayTotal;
-    });
     els.dayItems = accout;
-
     els.total.innerText = total.toLocaleString();
+
     return total;
 };
 
-function setCostList(day) {
-	els.todayTotalist.innerHTML = '';
-
-	day.cost.concat(day.costTwo).forEach(function (item) {
-		const li = document.createElement('li');
-		li.classList.add('today-cost-listitem');
-		li.textContent = (item.key ? item.key + ' : ' : '') + item.price.toLocaleString() + '원';
-		els.todayTotalist.appendChild(li);
-	});
-
-	(day.extra || []).forEach(function (item) {
-		const li = document.createElement('li');
-		li.classList.add('today-cost-listitem');
-
-		const label = document.createElement('span');
-		label.textContent = (item.key ? item.key + ' : ' : '') + item.price.toLocaleString() + '원';
-		li.appendChild(label);
-
-		const removeBtn = document.createElement('button');
-		removeBtn.type = 'button';
-		removeBtn.classList.add('today-cost-listitem__remove');
-		removeBtn.textContent = '삭제';
-		removeBtn.dataset.extraId = item.id;
-		li.appendChild(removeBtn);
-
-		els.todayTotalist.appendChild(li);
-	});
+function formatCostLabel(item) {
+    return (item.key ? item.key + ' : ' : '') + item.price.toLocaleString() + '원';
 };
 
-function removeExtraCost(itemId) {
-    fetch(SHEETS_WEB_APP_URL, {
-        method: 'POST',
-        body: new URLSearchParams({ action: 'delete', id: itemId })
-    }).then(fetchExtraCosts);
+function createCostListItem(item, removable) {
+    const li = document.createElement('li');
+    li.classList.add('today-cost-list-item');
+
+    if (!removable) {
+        li.textContent = formatCostLabel(item);
+        return li;
+    }
+
+    const label = document.createElement('span');
+    label.textContent = formatCostLabel(item);
+    li.appendChild(label);
+
+    const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
+    removeBtn.classList.add('today-cost-list-item__remove');
+    removeBtn.textContent = '삭제';
+    removeBtn.dataset.extraId = item.id;
+    li.appendChild(removeBtn);
+
+    return li;
+};
+
+function setCostList(day) {
+    els.todayCostList.innerHTML = '';
+
+    day.cost.concat(day.costTwo).forEach(function (item) {
+        els.todayCostList.appendChild(createCostListItem(item, false));
+    });
+
+    (day.extra || []).forEach(function (item) {
+        els.todayCostList.appendChild(createCostListItem(item, true));
+    });
 };
 
 function bindCostList() {
-    els.todayTotalist.addEventListener('click', function (event) {
-        const removeBtn = event.target.closest('.today-cost-listitem__remove');
+    els.todayCostList.addEventListener('click', function (event) {
+        const removeBtn = event.target.closest('.today-cost-list-item__remove');
 
         if (!removeBtn) {
             return;
@@ -210,7 +240,6 @@ function init() {
     setElement();
     els.staticDays = buildStaticDayCosts();
     totalAccout();
-    setCostNumber();
 
     bindExtraCostForm();
     bindCostList();

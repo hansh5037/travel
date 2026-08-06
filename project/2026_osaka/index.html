@@ -35,7 +35,7 @@
 			</div>
 		</div>
 		<div class="schedule">
-			<ul role="tablist" class="tab">
+			<ul role="tablist" class="tab tab-bg">
 				<li role="tab" class="tab-list is-active">
 					<button type="button" id="tabButton1" class="tab-button" aria-selected="true">
 						<span class="tab-icon">1</span>
@@ -291,7 +291,13 @@
 				</div>
 			</div>
 			<div class="today-cost">
-				<button type="button" class="today-cost-button"><span class="today-cost-arrow">▼ </span>오늘 사용금액 : <span class="today-total-cost"></span>원</button>
+				<button type="button" class="today-cost-button">
+					<span class="today-cost-arrow"></span>
+					<div class="today-cost-text">
+						<span>오늘 사용금액</span>
+						<span class="today-total-cost"></span>
+					</div>
+				</button>
 				<div class="today-cost-body">
 					<div class="today-cost-body__inner">
 						<ol role="list" class="today-cost-list">

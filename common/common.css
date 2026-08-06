@@ -1,13 +1,14 @@
 *, *::before, *::after {box-sizing: border-box;}
 html, body {overflow-x: hidden;}
-body {position: relative; width: 100%; max-width: 534px; margin: 0 auto; background-color: #f8f8f8;font-family: 'MemomentKkukkukk', sans-serif;font-size: 14px;color: #333;line-height: 1.3;}
-ul, ol, li {list-style: none;padding: 0;margin: 0;}
-button, a {all: unset}
-img {width: 100%;}
 :root {
 	--shadow: 1px 1px 4px 1px #dfdfdf;
 	--radius: 12px;
+	--content-max-width: 534px;
 }
+body {position: relative; width: 100%; max-width: var(--content-max-width); margin: 0 auto; background-color: #f8f8f8;font-family: 'MemomentKkukkukk', sans-serif;font-size: 14px;color: #333;line-height: 1.3;}
+ul, ol, li {list-style: none;padding: 0;margin: 0;}
+button, a {all: unset}
+img {width: 100%;}
 .common-inner {
 	width: 90%;
 	margin: 60px auto;
