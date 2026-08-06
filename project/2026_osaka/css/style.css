@@ -132,9 +132,19 @@
 	row-gap: 20px;
 }
 .table-row {
+	position: relative;
 	display: grid;
 	grid-template-columns: 20% 40% 40%;
 	gap: 6px 0;
+}
+.table-row::after {
+	content: '';
+	position: absolute;
+	bottom: -6px;
+	left: 50%;
+	width: 95%;
+	transform: translateX(-50%);
+	border-bottom: 1px solid #ededed;
 }
 /* .table-time {
 	padding: 0 6px;
