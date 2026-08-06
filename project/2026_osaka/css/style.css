@@ -171,10 +171,23 @@
 	display: inline-block;
 	width: 12px;
 	padding: 0 4px;
+	transition: transform .3s ease;
 }
 .is-active .today-cost-arrow {
 	transform: scale(-1);
 	transform-origin: center;
+}
+.today-cost-body {
+	display: grid;
+	grid-template-rows: 0fr;
+	transition: grid-template-rows .3s ease;
+}
+.today-cost-button.is-active + .today-cost-body {
+	grid-template-rows: 1fr;
+}
+.today-cost-body__inner {
+	min-height: 0;
+	overflow: hidden;
 }
 .today-cost-form {
 	display: flex;

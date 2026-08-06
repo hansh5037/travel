@@ -11,6 +11,7 @@ function setElement() {
     els.total = document.querySelector('.total');
     els.todayTotal = document.querySelector('.today-total-cost');
     els.todayTotalist = document.querySelector('.today-cost-list');
+    els.todayCostButton = document.querySelector('.today-cost-button');
 
     els.extraDesc = document.querySelector('.today-cost-form__desc');
     els.extraPrice = document.querySelector('.today-cost-form__price');
@@ -62,6 +63,12 @@ function bindExtraCostForm() {
         if (event.key === 'Enter') {
             addExtraCost();
         }
+    });
+};
+
+function bindTodayCostToggle() {
+    els.todayCostButton.addEventListener('click', function () {
+        els.todayCostButton.classList.toggle('is-active');
     });
 };
 
@@ -208,6 +215,7 @@ function init() {
 
     bindExtraCostForm();
     bindCostList();
+    bindTodayCostToggle();
 
     activeTabButton();
     activeTabPanel(0);
