@@ -37,7 +37,7 @@
     z-index: -1;
 	content: '';
     position: absolute;
-    bottom: 75%;
+    bottom: 60%;
     left: 50%;
     right: 0;
     width: 100vw;
@@ -45,7 +45,7 @@
     transform: translateX(-50%);
     background-image: url(../images/project-2026-osaka-bg.jpg);
     background-repeat: no-repeat;
-    aspect-ratio: 1774 / 1516;
+    aspect-ratio: 2128 / 2244;
     background-size: cover;
 }
 
