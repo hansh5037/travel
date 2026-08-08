@@ -250,4 +250,6 @@ function init() {
     activeTabPanel(0);
 };
 
-document.addEventListener('DOMContentLoaded', init);
+document.addEventListener('DOMContentLoaded', function () {
+    (window.includesReady || Promise.resolve()).then(init);
+});

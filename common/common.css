@@ -10,7 +10,7 @@ ul, ol, li {list-style: none;padding: 0;margin: 0;}
 button, a {all: unset}
 img {width: 100%;}
 .common-inner {
-	width: 90%;
+	width: 92%;
 	margin: 60px auto;
 }
 @font-face {
