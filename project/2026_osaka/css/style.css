@@ -157,7 +157,7 @@
 	position: absolute;
 	bottom: -12px;
 	left: 50%;
-	width: 95%;
+	width: 100%;
 	transform: translateX(-50%);
 	border-bottom: 1px solid #ededed;
 }
@@ -213,6 +213,9 @@
 }
 .tour .table-time::before {
     background-image: url(../images/project-2026-osaka-tour.svg);
+}
+.coffee .table-time::before {
+    background-image: url(../images/project-2026-osaka-coffee.svg);
 }
 
 .table-link {
