@@ -191,31 +191,31 @@
 	background-repeat: no-repeat;
 }
 .car .table-time::before {
-    background-image: url(../images/project-2026-osaka-car.svg);
+    background-image: url(../images/project-2026-osaka-car.png);
 }
 .air-plane .table-time::before {
-    background-image: url(../images/project-2026-osaka-air-plane.svg);
+    background-image: url(../images/project-2026-osaka-air-plane.png);
 }
 .restaurant .table-time::before {
-    background-image: url(../images/project-2026-osaka-restaurant.svg);
+    background-image: url(../images/project-2026-osaka-restaurant.png);
 }
 .home .table-time::before {
-    background-image: url(../images/project-2026-osaka-home.svg);
+    background-image: url(../images/project-2026-osaka-home.png);
 }
 .train .table-time::before {
-    background-image: url(../images/project-2026-osaka-train.svg);
+    background-image: url(../images/project-2026-osaka-train.png);
 }
 .shop .table-time::before {
-    background-image: url(../images/project-2026-osaka-shop.svg);
+    background-image: url(../images/project-2026-osaka-shop.png);
 }
 .market .table-time::before {
-    background-image: url(../images/project-2026-osaka-market.svg);
+    background-image: url(../images/project-2026-osaka-market.png);
 }
 .tour .table-time::before {
-    background-image: url(../images/project-2026-osaka-tour.svg);
+    background-image: url(../images/project-2026-osaka-tour.png);
 }
 .coffee .table-time::before {
-    background-image: url(../images/project-2026-osaka-coffee.svg);
+    background-image: url(../images/project-2026-osaka-coffee.png);
 }
 
 .table-link {
