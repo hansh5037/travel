@@ -18,8 +18,16 @@
 	flex: 1;
 }
 .info-icon {
-	margin: 5px 0;
-	font-size: 18px;
+	display: flex;
+	justify-content: center;
+    align-items: center;
+	margin: 5px auto;
+	width: 30px;
+	height: 30px;
+	padding-top: 3px;
+	border-radius: 50%;
+	background-color: #fcf5f6;
+	font-size: 16px;
 }
 .info-text {
 	font-size: 10px;
@@ -37,15 +45,15 @@
     z-index: -1;
 	content: '';
     position: absolute;
-    bottom: 60%;
+    bottom: 65%;
     left: 50%;
     right: 0;
     width: 100vw;
 	max-width: var(--content-max-width);
     transform: translateX(-50%);
-    background-image: url(../images/project-2026-osaka-bg.jpg);
+    background-image: url(../images/project-2026-osaka-bg.jpeg);
     background-repeat: no-repeat;
-    aspect-ratio: 2128 / 2244;
+    aspect-ratio: 2128 / 1462;
     background-size: cover;
 }
 
@@ -125,6 +133,13 @@
 	margin: 10px 0 34px;
 	font-size: 12px;
 }
+.tabpanel-reference-list {
+	font-size: 11px;
+	color: #606060;
+}
+.tabpanel-reference-list + .tabpanel-reference-list{
+	margin-top: 6px;
+}
 
 /* 일정표 */
 .table {
@@ -134,17 +149,20 @@
 .table-row {
 	position: relative;
 	display: grid;
-	grid-template-columns: 20% 40% 40%;
-	gap: 12px 0;
+	grid-template-columns: 20% 1fr 1fr;
+	gap: 12px 8px;
 }
 .table-row::after {
 	content: '';
 	position: absolute;
 	bottom: -12px;
 	left: 50%;
-	width: 95%;
+	width: 100%;
 	transform: translateX(-50%);
 	border-bottom: 1px solid #ededed;
+}
+.table-row:last-child::after {
+	border-bottom: 0;
 }
 .table-time {
 	position: relative;
@@ -162,13 +180,14 @@
     content: '';
     position: absolute;
 	z-index: 1;
-    right: 6px;
+    right: 8px;
     top: 9px;
     transform: translateY(-50%);
-    width: 16px;
-    height: 16px;
+    width: 12px;
+    height: 12px;
+	background-color: #fff;
     background-position: center;
-	background-size: cover;
+	background-size: contain;
 	background-repeat: no-repeat;
 }
 .car .table-time::before {
@@ -194,6 +213,9 @@
 }
 .tour .table-time::before {
     background-image: url(../images/project-2026-osaka-tour.svg);
+}
+.coffee .table-time::before {
+    background-image: url(../images/project-2026-osaka-coffee.svg);
 }
 
 .table-link {
