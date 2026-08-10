@@ -4,6 +4,13 @@
 	text-align: center;
 }
 
+/* button */
+.file-button {
+	background-color: #f2a59b;
+	border-radius: 20px;
+	padding: 6px;
+}
+
 /* info */
 .info {
 	display: flex;
