@@ -7,6 +7,7 @@ html, body {overflow-x: hidden;}
 }
 body {position: relative; width: 100%; max-width: var(--content-max-width); margin: 0 auto; background-color: #f8f8f8;font-family: 'MemomentKkukkukk', sans-serif;font-size: 14px;color: #333;line-height: 1.3;}
 ul, ol, li {list-style: none;padding: 0;margin: 0;}
+dl, dt, dd {margin: 0;}
 button, a {all: unset}
 img {width: 100%;}
 .common-inner {
@@ -18,4 +19,15 @@ img {width: 100%;}
 	src: url('./fonts/MemomentKkukkukk.otf') format('opentype'), url('./fonts/MemomentKkukkukk.ttf') format('truetype');
 	font-weight: normal;
 	font-style: normal;
+}
+.sr-only {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	padding: 0;
+	margin: -1px;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
 }

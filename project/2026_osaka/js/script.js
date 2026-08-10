@@ -129,23 +129,51 @@ function bindExtraCostForm() {
 
 function bindTodayCostToggle() {
     els.todayCostButton.addEventListener('click', function () {
-        els.todayCost.classList.toggle('is-active');
+        const isActive = els.todayCost.classList.toggle('is-active');
+        els.todayCostButton.setAttribute('aria-expanded', isActive ? 'true' : 'false');
     });
+};
+
+function selectTab(index) {
+    els.buttons.forEach(function (btn, btnIndex) {
+        const tabButton = btn.querySelector('.tab-button');
+        const isSelected = btnIndex === index;
+
+        btn.classList.toggle('is-active', isSelected);
+        tabButton.setAttribute('aria-selected', isSelected ? 'true' : 'false');
+        tabButton.setAttribute('tabindex', isSelected ? '0' : '-1');
+    });
+
+    activeTabPanel(index);
 };
 
 function activeTabButton() {
     els.buttons.forEach(function (button, index) {
-        button.addEventListener('click', function () {
+        const tabButton = button.querySelector('.tab-button');
 
-            els.buttons.forEach(function (btn) {
-                btn.classList.remove('is-active');
-                btn.querySelector('.tab-button').setAttribute('aria-selected', 'false');
-            });
+        tabButton.addEventListener('click', function () {
+            selectTab(index);
+        });
 
-            button.classList.add('is-active');
-            button.querySelector('.tab-button').setAttribute('aria-selected', 'true');
+        tabButton.addEventListener('keydown', function (event) {
+            const lastIndex = els.buttons.length - 1;
+            let nextIndex = null;
 
-            activeTabPanel(index);
+            if (event.key === 'ArrowRight' || event.key === 'ArrowDown') {
+                nextIndex = index === lastIndex ? 0 : index + 1;
+            } else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') {
+                nextIndex = index === 0 ? lastIndex : index - 1;
+            } else if (event.key === 'Home') {
+                nextIndex = 0;
+            } else if (event.key === 'End') {
+                nextIndex = lastIndex;
+            } else {
+                return;
+            }
+
+            event.preventDefault();
+            selectTab(nextIndex);
+            els.buttons[nextIndex].querySelector('.tab-button').focus();
         });
     });
 };

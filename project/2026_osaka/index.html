@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 
 <head>
 	<meta charset="UTF-8">
@@ -10,101 +10,111 @@
 </head>
 
 <body>
-	<div class="common-inner">
-		<h1 class="headline">2026 오사카 여행🏯</h1>
-		<div class="info">
-			<div class="info-box">
-				<div class="info-icon">📅</div>
-				<div class="info-text">기간</div>
-				<div class="info-text">2026.08.14 ~ 18</div>
-				<div class="info-desc">(4박 5일)</div>
-			</div>
-			<div class="info-box">
-				<div class="info-icon">📍</div>
-				<div class="info-text">장소</div>
-				<div class="info-text">오사카, 교토</div>
-			</div>
-			<div class="info-box">
-				<div class="info-icon">💵</div>
-				<div class="info-text">budget</div>
-				<div class="info-text">1,300,000원</div>
-				<div class="info-desc">(1인당)</div>
-			</div>
-			<div class="info-box">
-				<div class="info-icon">💸</div>
-				<div class="info-text">Total cost</div>
-				<div class="info-text"><span class="total"></span>원</div>
-				<div class="info-desc">(1인당)</div>
-			</div>
-		</div>
-		<div class="schedule">
-			<ul role="tablist" class="tab tab-bg">
-				<li role="tab" class="tab-list is-active">
-					<button type="button" id="tabButton1" class="tab-button" aria-selected="true">
-						<span class="tab-icon">1</span>
+	<main class="common-inner">
+		<h1 class="headline">2026 오사카 여행 <span aria-hidden="true">🏯</span></h1>
+		<section aria-labelledby="info-heading">
+			<h2 id="info-heading" class="sr-only">여행 정보 요약</h2>
+			<dl class="info">
+				<div class="info-box">
+					<div class="info-icon" aria-hidden="true">📅</div>
+					<dt class="info-text">기간</dt>
+					<dd class="info-text">2026.08.14 ~ 18</dd>
+					<dd class="info-desc">(4박 5일)</dd>
+				</div>
+				<div class="info-box">
+					<div class="info-icon" aria-hidden="true">📍</div>
+					<dt class="info-text">장소</dt>
+					<dd class="info-text">오사카, 교토</dd>
+				</div>
+				<div class="info-box">
+					<div class="info-icon" aria-hidden="true">💵</div>
+					<dt class="info-text">budget</dt>
+					<dd class="info-text">1,300,000원</dd>
+					<dd class="info-desc">(1인당)</dd>
+				</div>
+				<div class="info-box">
+					<div class="info-icon" aria-hidden="true">💸</div>
+					<dt class="info-text">Total cost</dt>
+					<dd class="info-text"><span class="total" aria-live="polite"></span>원</dd>
+					<dd class="info-desc">(1인당)</dd>
+				</div>
+			</dl>
+		</section>
+		<section class="schedule" aria-label="일자별 여행 일정">
+			<ul role="tablist" class="tab tab-bg" aria-label="일자별 탭">
+				<li role="presentation" class="tab-list is-active">
+					<button type="button" id="tabButton1" role="tab" class="tab-button" aria-selected="true"
+						aria-controls="tabpanel1" tabindex="0">
+						<span class="tab-icon" aria-hidden="true">1</span>
 						<span class="tab-text">DAY</span>
 					</button>
 				</li>
-				<li role="tab" class="tab-list">
-					<button type="button" id="tabButton2" class="tab-button" aria-selected="false">
-						<span class="tab-icon">2</span>
+				<li role="presentation" class="tab-list">
+					<button type="button" id="tabButton2" role="tab" class="tab-button" aria-selected="false"
+						aria-controls="tabpanel2" tabindex="-1">
+						<span class="tab-icon" aria-hidden="true">2</span>
 						<span class="tab-text">DAY</span>
 					</button>
 				</li>
-				<li role="tab" class="tab-list">
-					<button type="button" id="tabButton3" class="tab-button" aria-selected="false">
-						<span class="tab-icon">3</span>
+				<li role="presentation" class="tab-list">
+					<button type="button" id="tabButton3" role="tab" class="tab-button" aria-selected="false"
+						aria-controls="tabpanel3" tabindex="-1">
+						<span class="tab-icon" aria-hidden="true">3</span>
 						<span class="tab-text">DAY</span>
 					</button>
 				</li>
-				<li role="tab" class="tab-list">
-					<button type="button" id="tabButton4" class="tab-button" aria-selected="false">
-						<span class="tab-icon">4</span>
+				<li role="presentation" class="tab-list">
+					<button type="button" id="tabButton4" role="tab" class="tab-button" aria-selected="false"
+						aria-controls="tabpanel4" tabindex="-1">
+						<span class="tab-icon" aria-hidden="true">4</span>
 						<span class="tab-text">DAY</span>
 					</button>
 				</li>
-				<li role="tab" class="tab-list">
-					<button type="button" id="tabButton5" class="tab-button" aria-selected="false">
-						<span class="tab-icon">5</span>
+				<li role="presentation" class="tab-list">
+					<button type="button" id="tabButton5" role="tab" class="tab-button" aria-selected="false"
+						aria-controls="tabpanel5" tabindex="-1">
+						<span class="tab-icon" aria-hidden="true">5</span>
 						<span class="tab-text">DAY</span>
 					</button>
 				</li>
 			</ul>
 			<div class="tabpanel-wrap">
-				<div role="tabpanel" aria-labelledby="tabButton1" class="tabpanel"
+				<div id="tabpanel1" role="tabpanel" aria-labelledby="tabButton1" tabindex="0" class="tabpanel"
 					data-include="partials/day1.html"></div>
-				<div role="tabpanel" aria-labelledby="tabButton2" class="tabpanel"
+				<div id="tabpanel2" role="tabpanel" aria-labelledby="tabButton2" tabindex="0" class="tabpanel"
 					data-include="partials/day2.html"></div>
-				<div role="tabpanel" aria-labelledby="tabButton3" class="tabpanel"
+				<div id="tabpanel3" role="tabpanel" aria-labelledby="tabButton3" tabindex="0" class="tabpanel"
 					data-include="partials/day3.html"></div>
-				<div role="tabpanel" aria-labelledby="tabButton4" class="tabpanel"
+				<div id="tabpanel4" role="tabpanel" aria-labelledby="tabButton4" tabindex="0" class="tabpanel"
 					data-include="partials/day4.html"></div>
-				<div role="tabpanel" aria-labelledby="tabButton5" class="tabpanel"
+				<div id="tabpanel5" role="tabpanel" aria-labelledby="tabButton5" tabindex="0" class="tabpanel"
 					data-include="partials/day5.html"></div>
 			</div>
 			<div class="today-cost">
-				<button type="button" class="today-cost-button">
-					<span class="today-cost-arrow"></span>
+				<button type="button" class="today-cost-button" aria-expanded="false" aria-controls="todayCostBody">
+					<span class="today-cost-arrow" aria-hidden="true"></span>
 					<div class="today-cost-text">
 						<span>오늘 사용금액</span>
-						<span class="today-total-cost"></span>
+						<span class="today-total-cost" aria-live="polite"></span>
 					</div>
 					<div class="today-cost-text-2">상세 보기 ></div>
 				</button>
-				<div class="today-cost-body">
+				<div class="today-cost-body" id="todayCostBody">
 					<div class="today-cost-body__inner">
 						<ol role="list" class="today-cost-list">
 						</ol>
 						<div class="today-cost-form">
-							<input type="text" class="today-cost-form__desc" placeholder="사용 내역">
-							<input type="number" class="today-cost-form__price" placeholder="금액" min="0">
+							<label class="sr-only" for="todayCostDesc">사용 내역</label>
+							<input type="text" id="todayCostDesc" class="today-cost-form__desc" placeholder="사용 내역">
+							<label class="sr-only" for="todayCostPrice">금액</label>
+							<input type="number" id="todayCostPrice" class="today-cost-form__price" placeholder="금액" min="0">
 							<button type="button" class="today-cost-form__add">추가</button>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</div>
+		</section>
+	</main>
 	<script src="../../common/include.js"></script>
 	<script src="../2026_osaka/js/sheets-config.js"></script>
 	<script src="../2026_osaka/js/script.js"></script>
