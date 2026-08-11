@@ -6,9 +6,26 @@
 
 /* button */
 .file-button {
-	background-color: #f2a59b;
-	border-radius: 20px;
-	padding: 6px;
+	display: inline-block;
+	width: 14px;
+	height: 14px;
+	margin: 0 4px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-image: url(../images/project-2026-osaka-file.png);
+	vertical-align: middle;
+}
+.window-button {
+	display: inline-block;
+	width: 12px;
+	height: 12px;
+	margin: 0 4px;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-image: url(../images/project-2026-osaka-new-window.png);
+	vertical-align: middle;
 }
 
 /* info */
@@ -249,7 +266,7 @@
 	background-color: #fff;
 }
 .today-cost-arrow {
-	display: inline-block;
+	display: block;
 	width: 30px;
 	height: 30px;
 	margin-right: 16px;
