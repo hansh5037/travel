@@ -5,27 +5,24 @@
 }
 
 /* button */
-.file-button {
-	display: inline-block;
-	width: 14px;
-	height: 14px;
-	margin: 0 4px;
-	background-size: cover;
-	background-repeat: no-repeat;
-	background-position: center;
-	background-image: url(../images/project-2026-osaka-file.png);
-	vertical-align: middle;
-}
+.file-button,
 .window-button {
 	display: inline-block;
-	width: 12px;
-	height: 12px;
 	margin: 0 4px;
 	background-size: cover;
 	background-repeat: no-repeat;
 	background-position: center;
-	background-image: url(../images/project-2026-osaka-new-window.png);
 	vertical-align: middle;
+}
+.file-button {
+	width: 14px;
+	height: 14px;
+	background-image: url(../images/project-2026-osaka-file.png);
+}
+.window-button {
+	width: 12px;
+	height: 12px;
+	background-image: url(../images/project-2026-osaka-new-window.png);
 }
 
 /* info */
@@ -279,7 +276,6 @@
 	display: grid;
 	grid-template-rows: 0fr;
 	transition: grid-template-rows .3s ease;
-	/* padding-top: 20px; */
 }
 .today-cost-button {
 	display: flex;
@@ -357,4 +353,3 @@
 	font-size: 10px;
 	white-space: nowrap;
 }
-@media screen and (min-width: 1024px) {}
