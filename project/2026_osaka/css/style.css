@@ -58,7 +58,7 @@
 }
 .info-desc {
 	font-size: 8px;
-	color: #8d8d8d;
+	color: #767676;
 }
 
 /* bg */
@@ -117,10 +117,10 @@
 .is-active.tab-list {
 	border-radius: var(--radius);
 	background-color: #f2a59b;
-	color: #fff;
+	color: #333;
 }
 .is-active .tab-icon {
-	color: #fff;
+	color: #333;
 }
 
 /* 탭판낼 */
@@ -301,7 +301,7 @@
 	margin-left: auto;
 	margin-right: 10px;
 	font-size: 10px;
-	color: #8d8d8d;
+	color: #767676;
 }
 .today-total-cost::after {
 	content: '원';
@@ -340,7 +340,7 @@
 	padding: 6px 12px;
 	border-radius: 6px;
 	background-color: #f2a59b;
-	color: #fff;
+	color: #333;
 	font-size: 12px;
 	white-space: nowrap;
 }
@@ -353,7 +353,7 @@
 }
 .today-cost-list-item__remove {
 	padding: 2px 8px;
-	color: #8d8d8d;
+	color: #767676;
 	font-size: 10px;
 	white-space: nowrap;
 }

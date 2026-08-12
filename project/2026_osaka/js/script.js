@@ -235,6 +235,7 @@ function createCostListItem(item, removable) {
     removeBtn.type = 'button';
     removeBtn.classList.add('today-cost-list-item__remove');
     removeBtn.textContent = '삭제';
+    removeBtn.setAttribute('aria-label', formatCostLabel(item) + ' 삭제');
     removeBtn.dataset.extraId = item.id;
     li.appendChild(removeBtn);
 
@@ -264,6 +265,20 @@ function bindCostList() {
     });
 };
 
+function enhanceNewWindowLinks() {
+    document.querySelectorAll('a[target="_blank"]').forEach(function (link) {
+        if (!link.hasAttribute('rel')) {
+            link.setAttribute('rel', 'noopener noreferrer');
+        }
+        if (!link.querySelector('.new-window-note')) {
+            const note = document.createElement('span');
+            note.className = 'sr-only new-window-note';
+            note.textContent = ' (새 창에서 열림)';
+            link.appendChild(note);
+        }
+    });
+};
+
 function init() {
     setElement();
     els.staticDays = buildStaticDayCosts();
@@ -276,6 +291,7 @@ function init() {
 
     activeTabButton();
     activeTabPanel(0);
+    enhanceNewWindowLinks();
 };
 
 document.addEventListener('DOMContentLoaded', function () {

@@ -9,6 +9,8 @@ body {position: relative; width: 100%; max-width: var(--content-max-width); marg
 ul, ol, li {list-style: none;padding: 0;margin: 0;}
 dl, dt, dd {margin: 0;}
 button, a {all: unset}
+button, a[href] {cursor: pointer;}
+button:focus-visible, a[href]:focus-visible {outline: 2px solid #f2a59b; outline-offset: 2px;}
 img {width: 100%;}
 .common-inner {
 	width: 92%;
