@@ -1,5 +1,5 @@
 *, *::before, *::after {box-sizing: border-box;}
-html, body {overflow-x: hidden;}
+html {overflow-x: hidden;}
 :root {
 	--shadow: 1px 1px 4px 1px #dfdfdf;
 	--radius: 12px;

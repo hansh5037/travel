@@ -1,6 +1,7 @@
 let els = {};
 
 const EXTRA_COST_POLL_INTERVAL = 15000;
+const PACKING_STORAGE_KEY = 'osaka2026-packing-checklist';
 let extraCostsCache = {};
 
 function setElement() {
@@ -16,6 +17,11 @@ function setElement() {
     els.extraDesc = document.querySelector('.today-cost-form__desc');
     els.extraPrice = document.querySelector('.today-cost-form__price');
     els.extraAdd = document.querySelector('.today-cost-form__add');
+
+    els.packing = document.querySelector('.packing');
+    els.packingButton = document.querySelector('.packing-button');
+    els.packingProgress = document.querySelector('.packing-progress');
+    els.packingCheckboxes = document.querySelectorAll('.packing-checkbox');
 
     els.activeIndex = 0;
 };
@@ -131,6 +137,46 @@ function bindTodayCostToggle() {
     els.todayCostButton.addEventListener('click', function () {
         const isActive = els.todayCost.classList.toggle('is-active');
         els.todayCostButton.setAttribute('aria-expanded', isActive ? 'true' : 'false');
+    });
+};
+
+function loadPackingState() {
+    try {
+        return JSON.parse(localStorage.getItem(PACKING_STORAGE_KEY)) || {};
+    } catch (error) {
+        return {};
+    }
+};
+
+function updatePackingProgress() {
+    const total = els.packingCheckboxes.length;
+    const checked = Array.prototype.filter.call(els.packingCheckboxes, function (checkbox) {
+        return checkbox.checked;
+    }).length;
+
+    els.packingProgress.innerText = checked + ' / ' + total;
+};
+
+function bindPackingChecklist() {
+    const state = loadPackingState();
+
+    els.packingCheckboxes.forEach(function (checkbox) {
+        checkbox.checked = !!state[checkbox.dataset.packingId];
+
+        checkbox.addEventListener('change', function () {
+            state[checkbox.dataset.packingId] = checkbox.checked;
+            localStorage.setItem(PACKING_STORAGE_KEY, JSON.stringify(state));
+            updatePackingProgress();
+        });
+    });
+
+    updatePackingProgress();
+};
+
+function bindPackingToggle() {
+    els.packingButton.addEventListener('click', function () {
+        const isActive = els.packing.classList.toggle('is-active');
+        els.packingButton.setAttribute('aria-expanded', isActive ? 'true' : 'false');
     });
 };
 
@@ -288,6 +334,9 @@ function init() {
     bindCostList();
     bindTodayCostToggle();
     bindExtraCostSync();
+
+    bindPackingToggle();
+    bindPackingChecklist();
 
     activeTabButton();
     activeTabPanel(0);
