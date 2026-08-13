@@ -343,6 +343,16 @@ function init() {
     enhanceNewWindowLinks();
 };
 
+function refreshScrollBounds() {
+    document.body.style.overflow = 'hidden';
+    document.body.offsetHeight;
+    document.body.style.overflow = '';
+};
+
 document.addEventListener('DOMContentLoaded', function () {
-    (window.includesReady || Promise.resolve()).then(init);
+    const contentReady = window.includesReady || Promise.resolve();
+    const fontsReady = (document.fonts && document.fonts.ready) || Promise.resolve();
+
+    contentReady.then(init);
+    Promise.all([contentReady, fontsReady]).then(refreshScrollBounds);
 });
