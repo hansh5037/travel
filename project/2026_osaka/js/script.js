@@ -18,8 +18,6 @@ function setElement() {
     els.extraPrice = document.querySelector('.today-cost-form__price');
     els.extraAdd = document.querySelector('.today-cost-form__add');
 
-    els.packing = document.querySelector('.packing');
-    els.packingButton = document.querySelector('.packing-button');
     els.packingProgress = document.querySelector('.packing-progress');
     els.packingCheckboxes = document.querySelectorAll('.packing-checkbox');
 
@@ -27,7 +25,14 @@ function setElement() {
 };
 
 function buildStaticDayCosts() {
-    return Array.prototype.map.call(els.panels, function (panel) {
+    const costPanels = Array.prototype.filter.call(els.panels, function (panel) {
+        return panel.dataset.day !== undefined;
+    });
+
+    const days = [];
+
+    costPanels.forEach(function (panel) {
+        const dayIndex = Number(panel.dataset.day);
         const day = { cost: [], costTwo: [], staticTotal: 0 };
 
         panel.querySelectorAll('.cost').forEach(function (element) {
@@ -43,8 +48,10 @@ function buildStaticDayCosts() {
             day.staticTotal += price;
         });
 
-        return day;
+        days[dayIndex] = day;
     });
+
+    return days;
 };
 
 function postExtraCost(params) {
@@ -101,7 +108,11 @@ function addExtraCost() {
         return;
     }
 
-    const dayIndex = els.activeIndex;
+    const dayIndex = els.activeDay;
+
+    if (dayIndex === null) {
+        return;
+    }
 
     postExtraCost({ action: 'add', day: dayIndex, desc: desc, price: price }).then(function (result) {
         applyExtraCostsUpdate(dayIndex, function (items) {
@@ -114,7 +125,7 @@ function addExtraCost() {
 };
 
 function removeExtraCost(itemId) {
-    const dayIndex = els.activeIndex;
+    const dayIndex = els.activeDay;
 
     postExtraCost({ action: 'delete', id: itemId }).then(function () {
         applyExtraCostsUpdate(dayIndex, function (items) {
@@ -173,13 +184,6 @@ function bindPackingChecklist() {
     updatePackingProgress();
 };
 
-function bindPackingToggle() {
-    els.packingButton.addEventListener('click', function () {
-        const isActive = els.packing.classList.toggle('is-active');
-        els.packingButton.setAttribute('aria-expanded', isActive ? 'true' : 'false');
-    });
-};
-
 function selectTab(index) {
     els.buttons.forEach(function (btn, btnIndex) {
         const tabButton = btn.querySelector('.tab-button');
@@ -227,15 +231,28 @@ function activeTabButton() {
 function activeTabPanel(activeIndex) {
     els.activeIndex = activeIndex;
 
+    let activePanel = null;
+
     els.panels.forEach(function (panel, index) {
         if (index === activeIndex) {
             panel.classList.add('is-active');
+            activePanel = panel;
         } else {
             panel.classList.remove('is-active');
         }
     });
 
-    const day = els.dayItems[activeIndex];
+    els.activeDay = activePanel && activePanel.dataset.day !== undefined
+        ? Number(activePanel.dataset.day)
+        : null;
+
+    els.todayCost.classList.toggle('is-hidden', els.activeDay === null);
+
+    if (els.activeDay === null) {
+        return;
+    }
+
+    const day = els.dayItems[els.activeDay];
 
     els.todayTotal.innerText = day.todayTotal.toLocaleString();
     setCostList(day);
@@ -335,7 +352,6 @@ function init() {
     bindTodayCostToggle();
     bindExtraCostSync();
 
-    bindPackingToggle();
     bindPackingChecklist();
 
     activeTabButton();
